@@ -11,8 +11,7 @@ namespace CareBairPackage
 
 		public static void LateUpdate()
 		{
-			if (!Enabled.Value ||
-				!Manager.Game.IsInstance() ||
+			if (!Manager.Game.IsInstance() ||
 				Manager.Game.Instance.WorldData == null ||
 				GUIUtility.hotControl != 0 ||
 				EventSystem.current.IsPointerOverGameObject() ||

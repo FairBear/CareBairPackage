@@ -13,7 +13,7 @@ namespace CareBairPackage
 
 		public static void Awake(ConfigFile Config)
 		{
-			Enabled = Config.AddSetting(SECTION, $"_{SECTION} Enabled", true, DESCRIPTION_ENABLED);
+			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
 
 			Subscription.Subscribe(typeof(ClothState), Enabled, Update);
 		}

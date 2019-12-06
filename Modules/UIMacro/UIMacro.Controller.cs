@@ -10,7 +10,6 @@ namespace CareBairPackage
 	public static partial class UIMacro
 	{
 		static readonly ADMSheet sheet = new ADMSheet("UI Macro", null, Condition);
-		static DevicePoint device;
 		static MenuUIBehaviour current;
 
 		public static void Update()
@@ -33,35 +32,23 @@ namespace CareBairPackage
 
 		public static bool Condition()
 		{
-			if (!Enabled.Value || !MapUIContainer.IsInstance())
-			{
-				if (current != null)
-					current = null;
-
+			if (!MapUIContainer.IsInstance())
 				return false;
-			}
 
-			if (current != null)
+			if (current != null && !current.IsActiveControl)
 			{
-				if (!current.IsActiveControl)
-				{
-					current = null;
+				Manager.Input input = Manager.Input.Instance;
+				current = null;
 
-					Manager.Input.Instance.ReserveState(Manager.Input.ValidType.Action);
-					Manager.Input.Instance.SetupState();
-					Map.Instance.Player.Controller.ChangeState("Normal");
-				}
+				input.ReserveState(Manager.Input.ValidType.Action);
+				input.SetupState();
+				Map.Instance.Player.Controller.ChangeState("Normal");
 			}
 
-			var ui = MapUIContainer.SystemMenuUI;
+			SystemMenuUI ui = MapUIContainer.SystemMenuUI;
 
 			if (!ui.IsActiveControl || !ui.HomeMenu.IsActiveControl)
-			{
-				if (device != null)
-					device = null;
-
 				return false;
-			}
 
 			return true;
 		}
@@ -89,32 +76,28 @@ namespace CareBairPackage
 		{
 			List<ADMSheet> sheets = new List<ADMSheet>();
 			PlayerActor player = Map.Instance.Player;
-			ActorController controller = player.Controller;
+			PlayerController controller = player.PlayerController;
+			DevicePoint[] devices = Object.FindObjectsOfType<DevicePoint>();
 
-			if (device == null)
+			if (devices != null && devices.Length > 0)
 			{
-				DevicePoint[] devices = Object.FindObjectsOfType<DevicePoint>();
+				DevicePoint device = devices.FirstOrDefault(v => v.ID == 0);
 
-				if (devices != null && devices.Length > 0)
+				if (device != null)
 				{
-					device = devices.FirstOrDefault(v => v.ID == 0);
-
-					if (device != null)
+					sheets.Add(new ADMSheet("Data Terminal", () =>
 					{
-						sheets.Add(new ADMSheet("Data Terminal", () =>
-						{
-							MapUIContainer.SystemMenuUI.IsActiveControl = false;
+						MapUIContainer.SystemMenuUI.IsActiveControl = false;
 
-							Manager.Resources.Instance.SoundPack.Play(SoundPack.SystemSE.BootDevice);
-							MapUIContainer.SetCommandLabelAcception(CommandLabel.AcceptionState.None);
+						Manager.Resources.Instance.SoundPack.Play(SoundPack.SystemSE.BootDevice);
+						MapUIContainer.SetCommandLabelAcception(CommandLabel.AcceptionState.None);
 
-							player.CurrentDevicePoint = device;
+						player.CurrentDevicePoint = device;
 
-							MapUIContainer.RefreshCommands(0, player.DeviceCommandInfos);
-							MapUIContainer.SetActiveCommandList(true, "データ端末");
-							controller.ChangeState("DeviceMenu");
-						}));
-					}
+						MapUIContainer.RefreshCommands(0, player.DeviceCommandInfos);
+						MapUIContainer.SetActiveCommandList(true, "データ端末");
+						controller.ChangeState("DeviceMenu");
+					}));
 				}
 			}
 

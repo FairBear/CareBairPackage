@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CareBairPackage
@@ -13,6 +14,7 @@ namespace CareBairPackage
 		public const float MARGIN_TOP = 20f;
 		public const float MARGIN_BOTTOM = 10f;
 		public const float SPACE_LEFT = 20f;
+		public const float SPACE_HIDDEN = 20f;
 		public const float DESCRIPTION_HEIGHT = 60f;
 		internal static float itemWidth = 0f;
 		internal static float sliderWidth = 0f;
@@ -24,101 +26,95 @@ namespace CareBairPackage
 		public static GUIStyle descriptionBoxStyle;
 		public static GUIStyle selectedButtonStyle;
 
-		private static Rect rect = new Rect();
-		private static readonly List<ADMSheet> sheets = new List<ADMSheet>();
-		private static ADMSheet currSheet;
-		private static int maxLength = 0;
-		private static int selected = 0;
-		private static bool visible = true;
-		private static float holdDelay = 0f;
-		private static bool hold = false;
+		static Rect rect = new Rect();
+		static readonly List<ADMSheet> sheets = new List<ADMSheet>();
+		static readonly HashSet<ADMSheet> sheetsDump = new HashSet<ADMSheet>();
+		static ADMSheet currSheet;
+		static int maxLength = 0;
+		static int selected = 0;
+		static bool visible = true;
+		static float holdDelay = 0f;
+		static bool hold = false;
 
 		public static void Update()
 		{
-			if (!Enabled.Value || sheets.Count == 0)
+			if (sheets.Count == 0)
 				return;
 
-			for (int i = 0; i < sheets.Count; i++)
-			{
-				ADMSheet sheet = sheets[i];
-
+			foreach (ADMSheet sheet in sheets)
 				if (sheet.condition != null && !sheet.condition())
 				{
-					sheets.Remove(sheet);
+					sheetsDump.Add(sheet);
 
 					if (currSheet == sheet)
-					{
-						currSheet = null;
-						selected = 0;
-					}
-
-					i--;
+						SetCurrSheet(null);
 				}
-			}
+
+			foreach (ADMSheet sheet in sheetsDump)
+				sheets.Remove(sheet);
+
+			sheetsDump.Clear();
 
 			if (ToggleKey.Value.IsDown())
 			{
 				if (visible && currSheet != null && sheets.Count > 1)
-				{
-					currSheet = null;
-					selected = 0;
-				}
+					SetCurrSheet(null);
 				else
 				{
 					visible = !visible;
-					rect.x = visible ? SPACE_LEFT : MARGIN_LEFT - width;
-				}
-			}
-			else if (ScrollDownKey.Value.IsPressed())
-			{
-				if (!KeyHold())
-					return;
-
-				selected = Mathf.Min(selected + 1, currSheet.sheets.Count - 1);
-			}
-			else if (ScrollUpKey.Value.IsPressed())
-			{
-				if (!KeyHold())
-					return;
-
-				selected = Mathf.Max(selected - 1, 0);
-			}
-			else if (IncreaseKey.Value.IsPressed())
-			{
-				if (!KeyHold())
-					return;
-
-				if (currSheet != null)
-					currSheet.sheets[selected].Invoke(1);
-				else
-				{
-					currSheet = sheets[selected];
-					selected = 0;
-				}
-			}
-			else if (DecreaseKey.Value.IsPressed())
-			{
-				if (!KeyHold())
-					return;
-
-				if (currSheet != null)
-					currSheet.sheets[selected].Invoke(-1);
-				else
-				{
-					currSheet = sheets[selected];
-					selected = 0;
+					rect.y = GetWindowPosY();
 				}
 			}
 			else
 			{
-				holdDelay = HOLD_DELAY;
-				hold = false;
+				if (!visible)
+					return;
+
+				if (ScrollDownKey.Value.IsPressed())
+				{
+					if (!KeyHold())
+						return;
+
+					selected = Mathf.Min(selected + 1, (currSheet?.sheets ?? sheets).Count - 1);
+				}
+				else if (ScrollUpKey.Value.IsPressed())
+				{
+					if (!KeyHold())
+						return;
+
+					selected = Mathf.Max(selected - 1, 0);
+				}
+				else if (IncreaseKey.Value.IsPressed())
+				{
+					if (!KeyHold())
+						return;
+
+					if (currSheet == null)
+						SetCurrSheet(sheets[selected]);
+					else
+						currSheet.sheets[selected].Invoke(1);
+				}
+				else if (DecreaseKey.Value.IsPressed())
+				{
+					if (!KeyHold())
+						return;
+
+					if (currSheet == null)
+						SetCurrSheet(sheets[selected]);
+					else
+						currSheet.sheets[selected].Invoke(-1);
+				}
+				else if (hold)
+				{
+					holdDelay = HOLD_DELAY;
+					hold = false;
+				}
 			}
 		}
 
 		public static void OnGUI()
 		{
-			if (!Enabled.Value || sheets.Count == 0)
+			if (sheets.Count == 0)
 				return;
 
 			if (descriptionBoxStyle == null)
@@ -146,7 +142,12 @@ namespace CareBairPackage
 					},
 				};
 
-			rect = GUI.Window(WindowID.Value, rect, Draw, currSheet?.label ?? "");
+			rect = GUI.Window(
+				WindowID.Value,
+				rect,
+				Draw,
+				$"[{ToggleKey.Value.ToString()}] {currSheet?.label ?? ""}"
+			);
 		}
 
 		public static bool Draw_Back()
@@ -154,11 +155,8 @@ namespace CareBairPackage
 			if (sheets.Count <= 1 || currSheet == null)
 				return false;
 
-			if (GUILayout.Button($"[{ToggleKey.Value.MainKey.ToString()}] Back", selectedButtonStyle))
-			{
-				currSheet = null;
-				selected = 0;
-			}
+			if (GUILayout.Button($"[{ToggleKey.Value.ToString()}] Back", selectedButtonStyle))
+				SetCurrSheet(null);
 
 			return true;
 		}
@@ -171,6 +169,7 @@ namespace CareBairPackage
 		public static void Draw(int id)
 		{
 			GUILayout.BeginArea(new Rect(MARGIN_LEFT, MARGIN_TOP, innerWidth, innerHeight));
+			if (visible)
 			{
 				GUILayout.BeginHorizontal();
 				{
@@ -198,12 +197,11 @@ namespace CareBairPackage
 						{
 							ADMSheet sheet = list[i];
 
-							if (sheet.Draw(i == selected, out int flag))
+							if (sheet.Draw(i == selected, out int next))
 							{
 								selected = i;
 
-								if (flag != 0)
-									sheet.Invoke(flag);
+								sheet.Invoke(next);
 							}
 						}
 
@@ -251,9 +249,9 @@ namespace CareBairPackage
 				(heightLimit - extraHeight) / ITEM_HEIGHT
 			));
 
-			if (currSheet != null)
-				maxLength = Mathf.Min(currSheet.sheets.Count + 2, maxLength);
+			List<ADMSheet> list = currSheet?.sheets ?? sheets;
 
+			maxLength = Mathf.Min(list.Count + 2, maxLength);
 			itemWidth = WinWidth.Value;
 			sliderWidth = itemWidth * 0.6f;
 			width = itemWidth + MARGIN_LEFT + MARGIN_RIGHT;
@@ -262,11 +260,16 @@ namespace CareBairPackage
 			innerHeight = height - MARGIN_TOP - MARGIN_BOTTOM;
 			maxLength -= 2;
 			rect = new Rect(
-				visible ? SPACE_LEFT : MARGIN_LEFT - width,
-				(Screen.height - height) / 2,
+				SPACE_LEFT,
+				GetWindowPosY(),
 				width,
 				height
 			);
+		}
+
+		public static float GetWindowPosY()
+		{
+			return visible ? (Screen.height - height) / 2 : Screen.height - SPACE_HIDDEN;
 		}
 
 		public static bool IsSheet(ADMSheet sheet)
@@ -274,18 +277,29 @@ namespace CareBairPackage
 			return currSheet == sheet;
 		}
 
+		public static void SetCurrSheet(ADMSheet sheet, bool refresh = true)
+		{
+			currSheet = sheet;
+			selected = 0;
+
+			if (refresh)
+				RefreshWindow();
+		}
+
 		public static void AddSheet(ADMSheet sheet, bool selectThis = true)
 		{
 			if (sheet == null || sheets.Contains(sheet))
 				return;
 
+			Action callback = () => SetCurrSheet(sheet);
+			sheet.callback = callback;
+
 			sheets.Add(sheet);
 
-			if (selectThis)
-				currSheet = sheet;
-
-			selected = 0;
 			visible = ShowImmediately.Value;
+
+			if (selectThis)
+				SetCurrSheet(sheet, false);
 
 			RefreshWindow();
 		}

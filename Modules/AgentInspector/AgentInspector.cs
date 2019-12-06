@@ -2,12 +2,13 @@
 
 namespace CareBairPackage
 {
-	public static partial class UIMacro
+	public static partial class AgentInspector
 	{
-		const string SECTION = "UI Macro";
+		const string SECTION = "Agent Inspector";
 
 		const string DESCRIPTION_ENABLED =
-			"Allows you to open several UIs from the phone menu.";
+			"Get the current agent being inspected by the player. " +
+			"Disabling this may make other modules useless.";
 
 		internal static ConfigEntry<bool> Enabled { get; set; }
 
@@ -15,7 +16,7 @@ namespace CareBairPackage
 		{
 			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
 
-			Subscription.Subscribe(typeof(UIMacro), Enabled, Update, LateUpdate);
+			Subscription.Subscribe(typeof(AgentInspector), Enabled, Update);
 		}
 	}
 }

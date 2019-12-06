@@ -25,11 +25,9 @@ namespace CareBairPackage
 			"Cloth State",
 			null,
 			Condition,
-			"Change the current state of the girl's clothes."
+			"Change the current state of the agent's clothes."
 		);
 
-		static IntReactiveProperty _selectedID;
-		static int selectedID;
 		static ChaControl current;
 
 		public static void Update()
@@ -43,49 +41,19 @@ namespace CareBairPackage
 
 		public static bool Condition()
 		{
-			if (!Enabled.Value || !Map.IsInstance() || Map.Instance.Player == null)
+			if (AgentInspector.Current == null)
 				return false;
 
-			PlayerActor player = Map.Instance.Player;
+			ChaControl next = AgentInspector.Current.ChaControl;
 
-			if (player.Controller.State is AIProject.Player.Communication && player.CommCompanion != null)
+			if (current != next)
 			{
-				if (selectedID != 0)
-				{
-					selectedID = 0;
-					current = player.CommCompanion.ChaControl;
+				current = next;
 
-					RefreshSheets();
-				}
-
-				return true;
+				RefreshSheets();
 			}
 
-			StatusUI ui = MapUIContainer.SystemMenuUI.StatusUI;
-
-			if (ui != null && ui.EnabledInput)
-			{
-				if (_selectedID == null)
-					_selectedID = Traverse.Create(ui).Field("_selectedID").GetValue<IntReactiveProperty>();
-
-				if (_selectedID != null && _selectedID.Value != 0)
-				{
-					if (_selectedID.Value != selectedID)
-					{
-						selectedID = _selectedID.Value;
-						current = Map.Instance.AgentTable[selectedID - 1].ChaControl;
-
-						RefreshSheets();
-					}
-
-					return true;
-				}
-			}
-			else if (_selectedID != null)
-				_selectedID = null;
-
-			selectedID = -1;
-			return false;
+			return true;
 		}
 
 		public static void RefreshSheets()
@@ -101,9 +69,12 @@ namespace CareBairPackage
 					current.fileStatus.clothesState[i],
 					0,
 					2,
-					(flag, slider) =>
+					(next, slider) =>
 					{
-						if (flag)
+						if (next == 0)
+							return;
+
+						if (next > 0)
 							current.SetClothesStateNext(n);
 						else
 							current.SetClothesStatePrev(n);

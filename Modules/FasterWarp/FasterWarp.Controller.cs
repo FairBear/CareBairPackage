@@ -21,7 +21,7 @@ namespace CareBairPackage
 
 		public static bool Condition()
 		{
-			return Enabled.Value &&
+			return
 				MapUIContainer.IsInstance() &&
 				MapUIContainer.Instance.MinimapUI.AllAreaMap.activeSelf;
 		}

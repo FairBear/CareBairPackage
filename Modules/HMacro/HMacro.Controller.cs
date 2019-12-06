@@ -7,10 +7,20 @@ namespace CareBairPackage
 {
 	public static partial class HMacro
 	{
+		static List<HScene.AnimationListInfo>[] lstAnimInfo;
+
 		public static void Update()
 		{
-			if (!Enabled.Value || !HSceneManager.IsInstance() || !HSceneManager.isHScene)
+			if (!HSceneManager.IsInstance())
 				return;
+
+			if (!HSceneManager.isHScene)
+			{
+				if (lstAnimInfo != null)
+					lstAnimInfo = null;
+
+				return;
+			}
 
 			int category = -1;
 
@@ -31,14 +41,12 @@ namespace CareBairPackage
 			{
 				if (HSceneFlagCtrl.Instance.selectAnimationListInfo == null)
 				{
-					List<HScene.AnimationListInfo>[] _lstAnimInfo = Traverse
-						.Create(HSceneFlagCtrl.Instance.GetComponent<HScene>())
-						.Field("lstAnimInfo")
-						.GetValue<List<HScene.AnimationListInfo>[]>();
+					if (lstAnimInfo == null)
+						GenerateList();
 
-					if (_lstAnimInfo != null && category < _lstAnimInfo.Length)
+					if (lstAnimInfo != null && category < lstAnimInfo.Length)
 					{
-						List<HScene.AnimationListInfo> list = _lstAnimInfo[category];
+						List<HScene.AnimationListInfo> list = lstAnimInfo[category];
 
 						if (list != null && list.Count > 0)
 						{

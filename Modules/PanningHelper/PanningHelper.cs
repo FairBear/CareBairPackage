@@ -23,10 +23,10 @@ namespace CareBairPackage
 
 		public static void Awake(ConfigFile Config)
 		{
-			Enabled = Config.AddSetting(SECTION, $"_{SECTION} Enabled", true, DESCRIPTION_ENABLED);
-			LMB = Config.AddSetting(SECTION, $"{SECTION} LMB", true, DESCRIPTION_LMB);
-			RMB = Config.AddSetting(SECTION, $"{SECTION} RMB", true, DESCRIPTION_RMB);
-			MMB = Config.AddSetting(SECTION, $"{SECTION} MMB", true, DESCRIPTION_MMB);
+			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
+			LMB = Config.Bind(SECTION, "LMB", true, DESCRIPTION_LMB);
+			RMB = Config.Bind(SECTION, "RMB", true, DESCRIPTION_RMB);
+			MMB = Config.Bind(SECTION, "MMB", true, DESCRIPTION_MMB);
 
 			Subscription.Subscribe(typeof(PanningHelper), Enabled, null, LateUpdate);
 		}

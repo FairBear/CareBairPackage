@@ -21,14 +21,14 @@ namespace CareBairPackage
 
 		public static void Awake(ConfigFile Config)
 		{
-			Enabled = Config.AddSetting(SECTION, $"_{SECTION} Enabled", true, DESCRIPTION_ENABLED);
+			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
 
-			CaressKey = Config.AddSetting(SECTION, $"{SECTION} Caress", new KeyboardShortcut(KeyCode.Keypad4));
-			ServiceKey = Config.AddSetting(SECTION, $"{SECTION} Service", new KeyboardShortcut(KeyCode.Keypad5));
-			IntercourseKey = Config.AddSetting(SECTION, $"{SECTION} Intercourse", new KeyboardShortcut(KeyCode.Keypad6));
-			SpecialKey = Config.AddSetting(SECTION, $"{SECTION} Special", new KeyboardShortcut(KeyCode.Keypad1));
-			LesbianKey = Config.AddSetting(SECTION, $"{SECTION} Lesbian", new KeyboardShortcut(KeyCode.Keypad2));
-			GroupKey = Config.AddSetting(SECTION, $"{SECTION} Group", new KeyboardShortcut(KeyCode.Keypad3));
+			CaressKey = Config.Bind(SECTION, "Caress", new KeyboardShortcut(KeyCode.Keypad4));
+			ServiceKey = Config.Bind(SECTION, "Service", new KeyboardShortcut(KeyCode.Keypad5));
+			IntercourseKey = Config.Bind(SECTION, "Intercourse", new KeyboardShortcut(KeyCode.Keypad6));
+			SpecialKey = Config.Bind(SECTION, "Special", new KeyboardShortcut(KeyCode.Keypad1));
+			LesbianKey = Config.Bind(SECTION, "Lesbian", new KeyboardShortcut(KeyCode.Keypad2));
+			GroupKey = Config.Bind(SECTION, "Group", new KeyboardShortcut(KeyCode.Keypad3));
 
 			Subscription.Subscribe(typeof(HMacro), Enabled, Update);
 		}

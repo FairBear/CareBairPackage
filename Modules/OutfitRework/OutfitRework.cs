@@ -21,10 +21,10 @@ namespace CareBairPackage
 
 		public static void Awake(ConfigFile Config)
 		{
-			Enabled = Config.AddSetting(SECTION, $"_{SECTION} Enabled", true);
+			Enabled = Config.Bind(SECTION, "__Enabled", true);
 
-			KeepOutfit = Config.AddSetting(SECTION, $"{SECTION} Keep Outfit", 50, new ConfigDescription(DESCRIPTION_KEEP_OUTFIT, new AcceptableValueRange<int>(0, 100)));
-			KeepHOutfit = Config.AddSetting(SECTION, $"{SECTION} Keep Outfit After H", 100, new ConfigDescription(DESCRIPTION_KEEP_H_OUTFIT, new AcceptableValueRange<int>(0, 100)));
+			KeepOutfit = Config.Bind(SECTION, "Keep Outfit", 50, new ConfigDescription(DESCRIPTION_KEEP_OUTFIT, new AcceptableValueRange<int>(0, 100)));
+			KeepHOutfit = Config.Bind(SECTION, "Keep Outfit After H", 100, new ConfigDescription(DESCRIPTION_KEEP_H_OUTFIT, new AcceptableValueRange<int>(0, 100)));
 
 			Subscription.Subscribe(typeof(OutfitRework), Enabled, patch: true);
 		}

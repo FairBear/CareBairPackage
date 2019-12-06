@@ -55,7 +55,7 @@ namespace CareBairPackage
 						int value,
 						int min,
 						int max,
-						Action<bool, ADMSheetSlider> callback = null,
+						Action<int, ADMSheetSlider> callback = null,
 						AltDialogMenu.Condition condition = null,
 						string description = null,
 						params ADMSheet[] sheets)
@@ -84,27 +84,24 @@ namespace CareBairPackage
 					ADMSheetSlider slider = value as ADMSheetSlider;
 
 					if (callback != null)
-						(callback as Action<bool, ADMSheetSlider>)(
-							flag > 0,
-							slider
-						);
+						(callback as Action<int, ADMSheetSlider>)(flag, slider);
 					else
-						slider.value = Mathf.Clamp(slider.value + (flag > 0 ? 1 : -1), slider.min, slider.max);
+						slider.value = Mathf.Clamp(slider.value + flag, slider.min, slider.max);
 
 					break;
 			}
 		}
 
-		public bool Draw(bool selected, out int flag)
+		public bool Draw(bool selected, out int next)
 		{
-			flag = 1;
+			next = 0;
 
 			switch (type)
 			{
 				case ADMSheetType.Slider:
 					ADMSheetSlider slider = value as ADMSheetSlider;
 					bool button;
-					int next;
+					int result;
 
 					GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
 					{
@@ -116,7 +113,7 @@ namespace CareBairPackage
 							GUILayout.Width(AltDialogMenu.sliderWidth)
 						);
 
-						next = (int)GUILayout.HorizontalSlider(
+						result = (int)GUILayout.HorizontalSlider(
 							slider.value,
 							slider.min,
 							slider.max,
@@ -125,19 +122,13 @@ namespace CareBairPackage
 					}
 					GUILayout.EndHorizontal();
 
-					if (button)
+					if (button || slider.value != result)
 					{
-						flag = 0;
+						next = result - slider.value;
 
 						return true;
 					}
 
-					if (slider.value != next)
-					{
-						flag = next - slider.value;
-
-						return true;
-					}
 					break;
 
 				default:

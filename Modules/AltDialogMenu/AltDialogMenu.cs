@@ -32,17 +32,17 @@ namespace CareBairPackage
 
 		public static void Awake(ConfigFile Config)
 		{
-			Enabled = Config.AddSetting(SECTION, $"_{SECTION} Enabled", true, DESCRIPTION_ENABLED);
-			WindowID = Config.AddSetting(SECTION, $"_{SECTION} Window ID", 7890);
+			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
+			WindowID = Config.Bind(SECTION, "__Window ID", 7890);
 
-			ShowImmediately = Config.AddSetting(SECTION, $"{SECTION} Show Dialog ASAP", true, DESCRIPTION_SHOW_IMMEDIATELY);
-			WinHeight = Config.AddSetting(SECTION, $"{SECTION} Window Height", 300, DESCRIPTION_WIN_HEIGHT);
-			WinWidth = Config.AddSetting(SECTION, $"{SECTION} Window Width", 200, DESCRIPTION_WIN_WIDTH);
-			ScrollUpKey = Config.AddSetting(SECTION, $"{SECTION} Scroll Up", new KeyboardShortcut(KeyCode.W));
-			ScrollDownKey = Config.AddSetting(SECTION, $"{SECTION} Scroll Down", new KeyboardShortcut(KeyCode.S));
-			DecreaseKey = Config.AddSetting(SECTION, $"{SECTION} Slider Decrease Value", new KeyboardShortcut(KeyCode.A));
-			IncreaseKey = Config.AddSetting(SECTION, $"{SECTION} Slider Increase Value", new KeyboardShortcut(KeyCode.D));
-			ToggleKey = Config.AddSetting(SECTION, $"{SECTION} Toggle Visibility Key", new KeyboardShortcut(KeyCode.Tab));
+			ShowImmediately = Config.Bind(SECTION, "Show Dialog ASAP", true, DESCRIPTION_SHOW_IMMEDIATELY);
+			WinHeight = Config.Bind(SECTION, "Window Height", 300, DESCRIPTION_WIN_HEIGHT);
+			WinWidth = Config.Bind(SECTION, "Window Width", 200, DESCRIPTION_WIN_WIDTH);
+			ScrollUpKey = Config.Bind(SECTION, "Scroll Up", new KeyboardShortcut(KeyCode.W));
+			ScrollDownKey = Config.Bind(SECTION, "Scroll Down", new KeyboardShortcut(KeyCode.S));
+			DecreaseKey = Config.Bind(SECTION, "Slider Decrease Value", new KeyboardShortcut(KeyCode.A));
+			IncreaseKey = Config.Bind(SECTION, "Slider Increase Value", new KeyboardShortcut(KeyCode.D));
+			ToggleKey = Config.Bind(SECTION, "Toggle Visibility Key", new KeyboardShortcut(KeyCode.Tab));
 
 			Subscription.Subscribe(typeof(AltDialogMenu), Enabled, Update, null, OnGUI);
 		}

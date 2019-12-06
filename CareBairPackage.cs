@@ -7,11 +7,12 @@ using UnityEngine;
 namespace CareBairPackage
 {
 	[BepInPlugin(GUID, Name, Version)]
+	[BepInProcess("AI-Syoujyo")]
 	public partial class CareBairPackage : BaseUnityPlugin
 	{
 		const string GUID = "com.fairbair.carebairpackage";
 		const string Name = "Care Bair Package";
-		const string Version = "1.1.2";
+		const string Version = "1.3.1";
 
 		const string SECTION = "_General";
 
@@ -22,17 +23,18 @@ namespace CareBairPackage
 
 		private void Awake()
 		{
-			if (Application.productName != "AI-Syoujyo")
-				return;
+			NotifyCrash = Config.Bind(SECTION, $"Notify In-Game on Crash", true, DESCRIPTION_NOTIFY_CRASH);
 
-			NotifyCrash = Config.AddSetting(SECTION, $"Notify In-Game on Crash", true, DESCRIPTION_NOTIFY_CRASH);
-
+			AgentInspector.Awake(Config);
+			RunKey.Awake(Config);
 			AltDialogMenu.Awake(Config);
+			HOverhaul.Awake(Config);
 			ClothState.Awake(Config);
 			FasterWarp.Awake(Config);
 			HMacro.Awake(Config);
 			OutfitRework.Awake(Config);
 			PanningHelper.Awake(Config);
+			ProfileInspector.Awake(Config);
 			UIMacro.Awake(Config);
 			UnrestrictedH.Awake(Config);
 		}
@@ -59,10 +61,10 @@ namespace CareBairPackage
 			entry.SettingChanged += (sender, args) => setter();
 		}
 
-		internal static void Log(Type source, string text)
+		internal static void LogError(Type source, string text)
 		{
-			string prefix = $"[{Name} {Version}]";
-			Debug.Log($"{prefix} {text}");
+			string prefix = $"[{Name}]";
+			Debug.LogError($"{prefix}\n{text}");
 
 			if (NotifyCrash.Value && MapUIContainer.IsInstance())
 				MapUIContainer.AddNotify($"{prefix} '{source.Name}' crashed! Disabling then enabling will reload it.");

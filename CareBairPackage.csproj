@@ -69,6 +69,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.AIModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -89,6 +93,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CareBairPackage.cs" />
+    <Compile Include="Modules\AgentInspector\AgentInspector.Controller.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.Controller.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.Hooks.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.Tools.cs" />
+    <Compile Include="Modules\HMacro\HMacro.Tools.cs" />
+    <Compile Include="Modules\RunKey\RunKey.Controller.cs" />
+    <Compile Include="Modules\RunKey\RunKey.cs" />
     <Compile Include="Modules\AltDialogMenu\ADMSheet.Slider.cs" />
     <Compile Include="Modules\AltDialogMenu\AltDialogMenu.Controller.cs" />
     <Compile Include="Modules\AltDialogMenu\AltDialogMenu.cs" />
@@ -103,6 +115,14 @@
     <Compile Include="Modules\PanningHelper\CursorPoint.cs" />
     <Compile Include="Modules\PanningHelper\PanningHelper.Controller.cs" />
     <Compile Include="Modules\PanningHelper\PanningHelper.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.AgentProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.Controller.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.Entry.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.LocomotionProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.PlayerProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.StatusProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.Tools.cs" />
     <Compile Include="Modules\UIMacro\UIMacro.Controller.cs" />
     <Compile Include="Modules\UIMacro\UIMacro.cs" />
     <Compile Include="Modules\UnrestrictedH\UnrestrictedH.cs" />
@@ -110,6 +130,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\ClothState\ClothState.cs" />
     <None Include="Services\MouseRaycastService.cs.bak" />
+    <Compile Include="Modules\AgentInspector\AgentInspector.cs" />
     <Compile Include="Services\Subscription\Subscription.cs" />
     <Compile Include="Services\Subscription\SubscriptionBundle.cs" />
   </ItemGroup>
