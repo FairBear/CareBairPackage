@@ -29,6 +29,9 @@ namespace CareBairPackage
 		[HarmonyPostfix, HarmonyPatch(typeof(HScene), "Update")]
 		public static void Postfix_HScene_Update(HScene __instance, ref HSceneManager ___hSceneManager, ref int ___mode, ref int ___modeCtrl)
 		{
+			if (__instance.NowStateIsEnd)
+				return;
+
 			HSceneFlagCtrl flagCtrl = __instance.ctrlFlag;
 
 			if (flagCtrl.selectAnimationListInfo != null)

@@ -66,7 +66,7 @@ namespace CareBairPackage
 				if (!flag)
 					continue;
 
-				list.Add(new ADMSheet(info.Name, () => Warp(basePoint.WarpPoint)));
+				list.Add(new ADMSheet(info.Name.Translate(), () => Warp(basePoint.WarpPoint)));
 			}
 
 			foreach (KeyValuePair<int, AgentActor> pair in Map.Instance.AgentTable)

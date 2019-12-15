@@ -62,6 +62,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UniRx.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -90,15 +94,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="XUnity.AutoTranslator.Plugin.Core">
+      <HintPath>F:\illusion\AI-Syoujyo\Bepinex\plugins\XUnity.AutoTranslator\XUnity.AutoTranslator.Plugin.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CareBairPackage.cs" />
     <Compile Include="Modules\AgentInspector\AgentInspector.Controller.cs" />
+    <Compile Include="Modules\EnvironmentControl\EnvironmentControl.Controller.cs" />
+    <Compile Include="Modules\EnvironmentControl\EnvironmentControl.cs" />
+    <Compile Include="Modules\EnvironmentControl\EnvironmentControl.GUI.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.Controller.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.GUI.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.Hooks.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.Tools.cs" />
     <Compile Include="Modules\HOverhaul\HOverhaul.Controller.cs" />
     <Compile Include="Modules\HOverhaul\HOverhaul.cs" />
     <Compile Include="Modules\HOverhaul\HOverhaul.Hooks.cs" />
     <Compile Include="Modules\HOverhaul\HOverhaul.Tools.cs" />
     <Compile Include="Modules\HMacro\HMacro.Tools.cs" />
+    <Compile Include="Modules\MadSkills\MadSkills.GUI.cs" />
+    <Compile Include="Modules\MadSkills\MadSkills.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.GUI.cs" />
     <Compile Include="Modules\RunKey\RunKey.Controller.cs" />
     <Compile Include="Modules\RunKey\RunKey.cs" />
     <Compile Include="Modules\AltDialogMenu\ADMSheet.Slider.cs" />
@@ -123,13 +141,15 @@
     <Compile Include="Modules\ProfileInspector\ProfileInspector.PlayerProfile.cs" />
     <Compile Include="Modules\ProfileInspector\ProfileInspector.StatusProfile.cs" />
     <Compile Include="Modules\ProfileInspector\ProfileInspector.Tools.cs" />
+    <Compile Include="Modules\Translator\Translator.cs" />
+    <Compile Include="Modules\Translator\Translator.Tools.cs" />
     <Compile Include="Modules\UIMacro\UIMacro.Controller.cs" />
     <Compile Include="Modules\UIMacro\UIMacro.cs" />
     <Compile Include="Modules\UnrestrictedH\UnrestrictedH.cs" />
     <Compile Include="Modules\UnrestrictedH\UnrestrictedH.Hooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\ClothState\ClothState.cs" />
-    <None Include="Services\MouseRaycastService.cs.bak" />
+    <Compile Include="Services\Window\Window.cs" />
     <Compile Include="Modules\AgentInspector\AgentInspector.cs" />
     <Compile Include="Services\Subscription\Subscription.cs" />
     <Compile Include="Services\Subscription\SubscriptionBundle.cs" />

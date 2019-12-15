@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace CareBairPackage
 {
-	public static partial class ProfileInspector
+	public static partial class EnvironmentControl
 	{
-		const string SECTION = "Profile Inspector";
+		const string SECTION = "Environment Control";
 
 		const string DESCRIPTION_ENABLED =
-			"Exposes some relevant profiles within the game's resources. " +
-			"Requires a restart when disabling/enabling.";
+			"Allows you to control the time and weather.";
 
 		internal static ConfigEntry<bool> Enabled { get; set; }
 		internal static ConfigEntry<int> WindowID { get; set; }
@@ -18,11 +17,11 @@ namespace CareBairPackage
 		public static void Awake(ConfigFile Config)
 		{
 			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
-			WindowID = Config.Bind(SECTION, "__Window ID", 7893);
+			WindowID = Config.Bind(SECTION, "__Window ID", 696969);
 
-			Key = Config.Bind(SECTION, "Toggle Key", new KeyboardShortcut(KeyCode.Keypad7));
+			Key = Config.Bind(SECTION, "Toggle Key", new KeyboardShortcut(KeyCode.F10));
 
-			Subscription.Subscribe(typeof(ProfileInspector), Enabled, Update, null, OnGUI);
+			Subscription.Subscribe(typeof(EnvironmentControl), Enabled, Update, null, OnGUI);
 		}
 	}
 }

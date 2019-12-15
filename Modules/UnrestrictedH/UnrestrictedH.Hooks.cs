@@ -1,8 +1,6 @@
 ﻿using AIProject;
-using Correct;
 using HarmonyLib;
 using Manager;
-using UnityEngine;
 
 namespace CareBairPackage
 {
@@ -33,19 +31,22 @@ namespace CareBairPackage
 		}
 
 		[HarmonyPrefix, HarmonyPatch(typeof(HSceneSprite), "CheckAutoMotionLimit")]
-		public static bool Prefix_HSceneSprite_CheckAutoMotionLimit(ref bool __result, HScene.AnimationListInfo lstAnimInfo)
+		public static bool Prefix_HSceneSprite_CheckAutoMotionLimit(ref bool __result,
+																	HScene.AnimationListInfo lstAnimInfo)
 		{
 			if (!AllHPos.Value)
 				return true;
 
-			// Unrestricted selection of all auto H positions.
+			// Unrestricted selection of all H positions during auto H.
 			__result = true;
 
 			return false;
 		}
 
-		[HarmonyPrefix, HarmonyPatch(typeof(HSceneSprite), "CheckMotionLimit", new[] { typeof(HScene.AnimationListInfo) })]
-		public static bool Prefix_HSceneSprite_CheckMotionLimit(ref bool __result, HScene.AnimationListInfo lstAnimInfo)
+		[HarmonyPrefix]
+		[HarmonyPatch(typeof(HSceneSprite), "CheckMotionLimit", typeof(HScene.AnimationListInfo))]
+		public static bool Prefix_HSceneSprite_CheckMotionLimit(ref bool __result,
+																HScene.AnimationListInfo lstAnimInfo)
 		{
 			if (!AllHPos.Value)
 				return true;
@@ -56,8 +57,11 @@ namespace CareBairPackage
 			return false;
 		}
 
-		[HarmonyPrefix, HarmonyPatch(typeof(HPointCtrl), "CheckMotionLimit", new[] { typeof(int), typeof(HScene.AnimationListInfo) })]
-		public static bool Prefix_HPointCtrl_CheckMotionLimit(ref bool __result, int place, HScene.AnimationListInfo lstAnimInfo)
+		[HarmonyPrefix]
+		[HarmonyPatch(typeof(HPointCtrl), "CheckMotionLimit", typeof(int), typeof(HScene.AnimationListInfo))]
+		public static bool Prefix_HPointCtrl_CheckMotionLimit(ref bool __result,
+															  int place,
+															  HScene.AnimationListInfo lstAnimInfo)
 		{
 			if (!AllHPos.Value)
 				return true;
@@ -69,7 +73,8 @@ namespace CareBairPackage
 		}
 
 		[HarmonyPrefix, HarmonyPatch(typeof(HSceneSprite), "MainCategoryOfLeaveItToYou")]
-		public static bool Prefix_HSceneSprite_MainCategoryOfLeaveItToYou(HSceneSprite __instance, bool _isLeaveItToYou)
+		public static bool Prefix_HSceneSprite_MainCategoryOfLeaveItToYou(HSceneSprite __instance,
+																		  bool _isLeaveItToYou)
 		{
 			if (!AllHPos.Value)
 				return true;
@@ -98,12 +103,14 @@ namespace CareBairPackage
 		}
 
 		[HarmonyPrefix, HarmonyPatch(typeof(HSceneSprite), "SetVisibleLeaveItToYou")]
-		public static bool Prefix_HSceneSprite_SetVisibleLeaveItToYou(HSceneSprite __instance, bool _visible, bool _judgeLeaveItToYou = false)
+		public static bool Prefix_HSceneSprite_SetVisibleLeaveItToYou(HSceneSprite __instance,
+																	  bool _visible,
+																	  bool _judgeLeaveItToYou = false)
 		{
-			if (!AllHPos.Value)
+			if (!VisibleAutoH.Value)
 				return true;
 
-			// Allow auto H for non-auto H positions.
+			// Force auto H toggle to be visible.
 			__instance.tglLeaveItToYou.gameObject.SetActive(true);
 
 			return false;

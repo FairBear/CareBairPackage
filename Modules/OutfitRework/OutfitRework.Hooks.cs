@@ -12,7 +12,8 @@ namespace CareBairPackage
 	{
 		readonly static HashSet<ChaControl> partners = new HashSet<ChaControl>();
 
-		[HarmonyPostfix, HarmonyPatch(typeof(HSceneManager), "HsceneInit", new[] { typeof(AgentActor[]) })]
+		[HarmonyPostfix]
+		[HarmonyPatch(typeof(HSceneManager), "HsceneInit", typeof(AgentActor[]))]
 		public static void Postfix_HSceneManager_HsceneInit(AgentActor[] agent)
 		{
 			foreach (AgentActor partner in agent)
@@ -20,7 +21,8 @@ namespace CareBairPackage
 					partners.Add(partner.ChaControl);
 		}
 
-		[HarmonyPostfix, HarmonyPatch(typeof(HSceneManager), "HsceneInit", new[] { typeof(MerchantActor), typeof(AgentActor) })]
+		[HarmonyPostfix]
+		[HarmonyPatch(typeof(HSceneManager), "HsceneInit", typeof(MerchantActor), typeof(AgentActor))]
 		public static void Postfix_HSceneManager_HsceneInit(MerchantActor Merchant, AgentActor agent = null)
 		{
 			if (!partners.Contains(Merchant.ChaControl))
@@ -30,7 +32,8 @@ namespace CareBairPackage
 				partners.Add(agent.ChaControl);
 		}
 
-		[HarmonyPrefix, HarmonyPatch(typeof(ChaControl), "ChangeNowCoordinate", new[] { typeof(ChaFileCoordinate), typeof(bool), typeof(bool) })]
+		[HarmonyPrefix]
+		[HarmonyPatch(typeof(ChaControl), "ChangeNowCoordinate", typeof(ChaFileCoordinate), typeof(bool), typeof(bool))]
 		public static bool Prefix_ChaControl_ChangeNowCoordinate(ChaControl __instance, ChaFileCoordinate srcCoorde, bool reload = false, bool forceChange = true)
 		{
 			if (!Map.IsInstance())
@@ -67,14 +70,6 @@ namespace CareBairPackage
 					actor.Mode == ActionType.EndTaskDressOut &&
 					Random.Range(0, 100) < KeepOutfit.Value)
 					return false;
-
-				/*
-[Info   : Unity Log] [AAAAAAAAAAAAAAAAAAAA] 10 | EndTaskDressIn | SearchBath | SearchBath | Normal
-[Info   : Unity Log] [AAAAAAAAAAAAAAAAAAAA] 11 | EndTaskDressOut | GotoDressOut | GotoDressOut | Normal
-[Info   : Unity Log] [AAAAAAAAAAAAAAAAAAAA] 10 | EndTaskDressIn | SearchBath | SearchBath | Normal
-[Info   : Unity Log] [AAAAAAAAAAAAAAAAAAAA] 11 | EndTaskDressOut | GotoDressOut | GotoDressOut | Normal
-Debug.Log($"[AAAAAAAAAAAAAAAAAAAA] {actor.ActionID} | {actor.Mode.ToString()} | {actor.PrevActionMode.ToString()} | {actor.PrevMode.ToString()} | {actor.ReservedMode.ToString()}");
-				 */
 			}
 
 			return true;

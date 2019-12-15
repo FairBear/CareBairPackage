@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace CareBairPackage
 {
-	public static partial class ProfileInspector
+	public static partial class ExtendedGraphics
 	{
-		const string SECTION = "Profile Inspector";
+		const string SECTION = "Extended Graphics";
 
 		const string DESCRIPTION_ENABLED =
-			"Exposes some relevant profiles within the game's resources. " +
-			"Requires a restart when disabling/enabling.";
+			"Allows you to edit some hidden graphics options in the game.";
 
 		internal static ConfigEntry<bool> Enabled { get; set; }
 		internal static ConfigEntry<int> WindowID { get; set; }
@@ -18,11 +17,13 @@ namespace CareBairPackage
 		public static void Awake(ConfigFile Config)
 		{
 			Enabled = Config.Bind(SECTION, "__Enabled", true, DESCRIPTION_ENABLED);
-			WindowID = Config.Bind(SECTION, "__Window ID", 7893);
+			WindowID = Config.Bind(SECTION, "__Window ID", 620938);
 
-			Key = Config.Bind(SECTION, "Toggle Key", new KeyboardShortcut(KeyCode.Keypad7));
+			Key = Config.Bind(SECTION, "Toggle Key", new KeyboardShortcut(KeyCode.O));
 
-			Subscription.Subscribe(typeof(ProfileInspector), Enabled, Update, null, OnGUI);
+			Subscription.Subscribe(typeof(ExtendedGraphics), Enabled, Update, null, OnGUI, true);
+
+			Load();
 		}
 	}
 }

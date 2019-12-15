@@ -12,7 +12,7 @@ namespace CareBairPackage
 	{
 		const string GUID = "com.fairbair.carebairpackage";
 		const string Name = "Care Bair Package";
-		const string Version = "1.3.1";
+		const string Version = "1.4.0";
 
 		const string SECTION = "_General";
 
@@ -26,15 +26,19 @@ namespace CareBairPackage
 			NotifyCrash = Config.Bind(SECTION, $"Notify In-Game on Crash", true, DESCRIPTION_NOTIFY_CRASH);
 
 			AgentInspector.Awake(Config);
-			RunKey.Awake(Config);
 			AltDialogMenu.Awake(Config);
 			HOverhaul.Awake(Config);
+			MadSkills.Awake(Config);
 			ClothState.Awake(Config);
+			EnvironmentControl.Awake(Config);
+			ExtendedGraphics.Awake(Config);
 			FasterWarp.Awake(Config);
 			HMacro.Awake(Config);
 			OutfitRework.Awake(Config);
 			PanningHelper.Awake(Config);
 			ProfileInspector.Awake(Config);
+			RunKey.Awake(Config);
+			Translator.Awake(Config);
 			UIMacro.Awake(Config);
 			UnrestrictedH.Awake(Config);
 		}
@@ -64,6 +68,7 @@ namespace CareBairPackage
 		internal static void LogError(Type source, string text)
 		{
 			string prefix = $"[{Name}]";
+
 			Debug.LogError($"{prefix}\n{text}");
 
 			if (NotifyCrash.Value && MapUIContainer.IsInstance())
