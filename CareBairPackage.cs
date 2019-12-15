@@ -12,7 +12,7 @@ namespace CareBairPackage
 	{
 		const string GUID = "com.fairbair.carebairpackage";
 		const string Name = "Care Bair Package";
-		const string Version = "1.4.0";
+		const string Version = "1.4.1";
 
 		const string SECTION = "_General";
 

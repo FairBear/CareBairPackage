@@ -76,16 +76,24 @@ namespace CareBairPackage
 		public static bool Prefix_HSceneSprite_MainCategoryOfLeaveItToYou(HSceneSprite __instance,
 																		  bool _isLeaveItToYou)
 		{
-			if (!AllHPos.Value)
-				return true;
+			if (AllHPos.Value)
+			{
+				if (_isLeaveItToYou)
+				{
+					__instance.MainCategoryOfLeaveItToYou(false);
 
-			// Redirect to regular H category assessment.
-			if (!_isLeaveItToYou)
-				return true;
+					return false;
+				}
+			}
+			else if (VisibleAutoH.Value)
+				if (!_isLeaveItToYou)
+				{
+					__instance.MainCategoryOfLeaveItToYou(true);
 
-			__instance.MainCategoryOfLeaveItToYou(false);
+					return false;
+				}
 
-			return false;
+			return true;
 		}
 
 		[HarmonyPrefix, HarmonyPatch(typeof(HSceneSprite), "SetAnimationMenu")]
