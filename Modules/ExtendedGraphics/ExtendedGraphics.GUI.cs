@@ -27,7 +27,7 @@ namespace CareBairPackage
 		{
 			if (toggle)
 				rect = Window.Draw(WindowID.Value, rect, Draw, "Extended Graphics");
-			else if (boolState.Get("Enable Extended Graphics", true))
+			else
 				Draw_Settings(false);
 		}
 
@@ -38,29 +38,24 @@ namespace CareBairPackage
 			{
 				GUILayout.BeginVertical();
 				{
-					if (Draw_Header())
+					scroll = GUILayout.BeginScrollView(scroll);
 					{
-						scroll = GUILayout.BeginScrollView(scroll);
-						{
-							Field("No Fade Animations", true);
-							Draw_Settings();
-						}
-						GUILayout.EndScrollView();
+						Field("No Fade Animations", true);
+						Draw_Settings();
 					}
+					GUILayout.EndScrollView();
+
+					Draw_Footer();
 				}
 				GUILayout.EndVertical();
 			}
 			GUILayout.EndArea();
 		}
 
-		static bool Draw_Header()
+		static void Draw_Footer()
 		{
-			bool result = true;
-
 			GUILayout.BeginHorizontal();
 			{
-				result = Field("Enable Extended Graphics", result);
-
 				if (GUILayout.Button("Save"))
 					Save();
 
@@ -68,24 +63,25 @@ namespace CareBairPackage
 					Load();
 			}
 			GUILayout.EndHorizontal();
-
-			return result;
 		}
 
 		static void Draw_Settings(bool draw = true)
 		{
 			GraphicSystem data = Config.GraphicData;
 
-			Draw_Settings_Bloom(data, draw);
-			Draw_Settings_SSAO(data, draw);
-			Draw_Settings_SSR(data, draw);
-			Draw_Settings_DepthOfField(data, draw);
-			Draw_Settings_Atmospheric(data, draw);
+			if (effector != null)
+			{
+				Draw_Settings_Bloom(data, draw);
+				Draw_Settings_SSAO(data, draw);
+				Draw_Settings_SSR(data, draw);
+				Draw_Settings_DepthOfField(data, draw);
+				Draw_Settings_Atmospheric(data, draw);
+			}
 		}
 
 		static void Draw_Settings_Atmospheric(GraphicSystem data, bool draw = true)
 		{
-			if (!data.Atmospheric || !Map.IsInstance() || Map.Instance.Simulator == null)
+			if (!data.Atmospheric || Map.Instance.Simulator == null)
 				return;
 
 			EnviroSky sky = Map.Instance.Simulator.EnviroSky;
@@ -101,7 +97,7 @@ namespace CareBairPackage
 
 		static void Draw_Settings_Bloom(GraphicSystem data, bool draw = true)
 		{
-			if (!data.Bloom || _bloom == null)
+			if (!data.Bloom)
 				return;
 
 			for (int i = 0; i < _bloom.Count; i++)
@@ -123,7 +119,7 @@ namespace CareBairPackage
 
 		static void Draw_Settings_SSAO(GraphicSystem data, bool draw = true)
 		{
-			if (!data.SSAO || _ao == null)
+			if (!data.SSAO)
 				return;
 
 			for (int i = 0; i < _ao.Count; i++)
@@ -147,7 +143,7 @@ namespace CareBairPackage
 
 		static void Draw_Settings_SSR(GraphicSystem data, bool draw = true)
 		{
-			if (!data.SSR || _ssr == null)
+			if (!data.SSR)
 				return;
 
 			for (int i = 0; i < _ssr.Count; i++)
@@ -168,7 +164,7 @@ namespace CareBairPackage
 
 		static void Draw_Settings_DepthOfField(GraphicSystem data, bool draw = true)
 		{
-			if (!data.DepthOfField || _dof == null)
+			if (!data.DepthOfField)
 				return;
 
 			for (int i = 0; i < _dof.Count; i++)

@@ -4,6 +4,7 @@ using UnityEngine.Rendering.PostProcessing;
 using ConfigScene;
 using AIProject;
 using UnityEngine;
+using Manager;
 
 namespace CareBairPackage
 {
@@ -21,6 +22,7 @@ namespace CareBairPackage
 		static readonly Dictionary<string, string> stringState = new Dictionary<string, string>();
 		static bool toggle = false;
 		static string csv;
+		static ConfigEffector effector;
 
 		static string SavePath => Path.Combine(Directory.GetCurrentDirectory(), "UserData", SAVENAME);
 
@@ -29,18 +31,19 @@ namespace CareBairPackage
 			if (Key.Value.IsDown())
 				toggle = !toggle;
 
-			ConfigEffector effector = Object.FindObjectOfType<ConfigEffector>();
-			bool hasEffector = effector?.PostProcessLayer != null;
-
-			if (!hasEffector)
+			if (!Map.IsInstance() || Map.Instance.Player == null)
 			{
-				_bloom = null;
-				_ao = null;
-				_ssr = null;
-				_dof = null;
+				effector = null;
+				return;
 			}
-			else if (_bloom == null || _ao == null || _ssr == null || _dof == null)
+
+			if (effector == null)
 			{
+				effector = Object.FindObjectOfType<ConfigEffector>();
+
+				if (effector == null)
+					return;
+
 				_bloom = new List<Bloom>();
 				_ao = new List<AmbientOcclusion>();
 				_ssr = new List<ScreenSpaceReflections>();

@@ -259,12 +259,7 @@ namespace CareBairPackage
 			innerWidth = width - MARGIN_LEFT - MARGIN_RIGHT;
 			innerHeight = height - MARGIN_TOP - MARGIN_BOTTOM;
 			maxLength -= 2;
-			rect = new Rect(
-				SPACE_LEFT,
-				GetWindowPosY(),
-				width,
-				height
-			);
+			rect = new Rect(SPACE_LEFT, GetWindowPosY(), width, height);
 		}
 
 		public static float GetWindowPosY()
