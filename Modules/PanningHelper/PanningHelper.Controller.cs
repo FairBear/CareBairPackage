@@ -7,7 +7,18 @@ namespace CareBairPackage
 	public static partial class PanningHelper
 	{
 		static bool drag = false;
+		static bool canDrag = false;
 		static CursorPoint lockPoint;
+
+		public static bool MouseDown =>
+			(LMB.Value && Input.GetMouseButtonDown(0)) ||
+			(RMB.Value && Input.GetMouseButtonDown(1)) ||
+			(MMB.Value && Input.GetMouseButtonDown(2));
+
+		public static bool MouseHeld =>
+			(LMB.Value && Input.GetMouseButton(0)) ||
+			(RMB.Value && Input.GetMouseButton(1)) ||
+			(MMB.Value && Input.GetMouseButton(2));
 
 		public static void LateUpdate()
 		{
@@ -19,39 +30,35 @@ namespace CareBairPackage
 				Cursor.lockState == CursorLockMode.Locked)
 				return;
 
-			if (!drag && MouseDown())
+			if (drag)
 			{
-				drag = true;
+				if (!MouseHeld)
+				{
+					drag = false;
+					Cursor.visible = true;
+					Cursor.lockState = CursorLockMode.None;
+					return;
+				}
 
-				GetCursorPos(out lockPoint);
-			}
-			else if (drag && MouseHeld())
-			{
 				Cursor.visible = false;
 				Cursor.lockState = CursorLockMode.Confined;
 
 				SetCursorPos(lockPoint.x, lockPoint.y);
 			}
-			else if (drag)
+			else if (Input.anyKey)
 			{
-				drag = false;
-				Cursor.visible = true;
-				Cursor.lockState = CursorLockMode.None;
+				if (!canDrag || !MouseDown)
+				{
+					canDrag = false;
+					return;
+				}
+
+				drag = true;
+
+				GetCursorPos(out lockPoint);
 			}
-}
-
-		public static bool MouseDown()
-		{
-			return (LMB.Value && Input.GetMouseButtonDown(0)) ||
-				(RMB.Value && Input.GetMouseButtonDown(1)) ||
-				(MMB.Value && Input.GetMouseButtonDown(2));
-		}
-
-		public static bool MouseHeld()
-		{
-			return (LMB.Value && Input.GetMouseButton(0)) ||
-				(RMB.Value && Input.GetMouseButton(1)) ||
-				(MMB.Value && Input.GetMouseButton(2));
+			else
+				canDrag = true;
 		}
 
 		public static float Magnitude(CursorPoint a, CursorPoint b)
