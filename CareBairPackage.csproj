@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1F85BD46-4A11-42D4-86F0-149C85440F3D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CareBairPackage</RootNamespace>
+    <AssemblyName>CareBairPackage</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>F:\illusion\AI-Syoujyo\Bepinex\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>F:\illusion\AI-Syoujyo\Bepinex\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Harmony">
+      <HintPath>F:\illusion\AI-Syoujyo\Bepinex\core\BepInEx.Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="ConfigurationManager">
+      <HintPath>F:\illusion\AI-Syoujyo\Bepinex\plugins\ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization, Version=2.0.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UniRx, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UniRx.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\illusion\AI-Syoujyo\AI-Syoujyo_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="XUnity.AutoTranslator.Plugin.Core">
+      <HintPath>F:\illusion\AI-Syoujyo\Bepinex\plugins\XUnity.AutoTranslator\XUnity.AutoTranslator.Plugin.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CareBairPackage.cs" />
+    <Compile Include="Modules\AgentInspector\AgentInspector.Controller.cs" />
+    <Compile Include="Modules\EnvironmentControl\EnvironmentControl.Controller.cs" />
+    <Compile Include="Modules\EnvironmentControl\EnvironmentControl.cs" />
+    <Compile Include="Modules\EnvironmentControl\EnvironmentControl.GUI.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.Controller.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.GUI.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.Hooks.cs" />
+    <Compile Include="Modules\ExtendedGraphics\ExtendedGraphics.Tools.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.Controller.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.Hooks.cs" />
+    <Compile Include="Modules\HOverhaul\HOverhaul.Tools.cs" />
+    <Compile Include="Modules\HMacro\HMacro.Tools.cs" />
+    <Compile Include="Modules\MadSkills\MadSkills.GUI.cs" />
+    <Compile Include="Modules\MadSkills\MadSkills.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.GUI.cs" />
+    <Compile Include="Modules\RunKey\RunKey.Controller.cs" />
+    <Compile Include="Modules\RunKey\RunKey.cs" />
+    <Compile Include="Modules\AltDialogMenu\ADMSheet.Slider.cs" />
+    <Compile Include="Modules\AltDialogMenu\AltDialogMenu.Controller.cs" />
+    <Compile Include="Modules\AltDialogMenu\AltDialogMenu.cs" />
+    <Compile Include="Modules\AltDialogMenu\ADMSheet.cs" />
+    <Compile Include="Modules\OutfitRework\OutfitRework.Hooks.cs" />
+    <Compile Include="Modules\OutfitRework\OutfitRework.cs" />
+    <Compile Include="Modules\ClothState\ClothState.Controller.cs" />
+    <Compile Include="Modules\FasterWarp\FasterWarp.Controller.cs" />
+    <Compile Include="Modules\FasterWarp\FasterWarp.cs" />
+    <Compile Include="Modules\HMacro\HMacro.Controller.cs" />
+    <Compile Include="Modules\HMacro\HMacro.cs" />
+    <Compile Include="Modules\PanningHelper\CursorPoint.cs" />
+    <Compile Include="Modules\PanningHelper\PanningHelper.Controller.cs" />
+    <Compile Include="Modules\PanningHelper\PanningHelper.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.AgentProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.Controller.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.Entry.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.LocomotionProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.PlayerProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.StatusProfile.cs" />
+    <Compile Include="Modules\ProfileInspector\ProfileInspector.Tools.cs" />
+    <Compile Include="Modules\Translator\Translator.cs" />
+    <Compile Include="Modules\Translator\Translator.Tools.cs" />
+    <Compile Include="Modules\UIMacro\UIMacro.Controller.cs" />
+    <Compile Include="Modules\UIMacro\UIMacro.cs" />
+    <Compile Include="Modules\UnrestrictedH\UnrestrictedH.cs" />
+    <Compile Include="Modules\UnrestrictedH\UnrestrictedH.Hooks.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modules\ClothState\ClothState.cs" />
+    <Compile Include="Services\Window\Window.cs" />
+    <Compile Include="Modules\AgentInspector\AgentInspector.cs" />
+    <Compile Include="Services\Subscription\Subscription.cs" />
+    <Compile Include="Services\Subscription\SubscriptionBundle.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
