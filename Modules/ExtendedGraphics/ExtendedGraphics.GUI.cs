@@ -26,7 +26,7 @@ namespace CareBairPackage
 		static void OnGUI()
 		{
 			if (toggle)
-				rect = Window.Draw(WindowID.Value, rect, Draw, "Extended Graphics");
+				rect = Window.Draw(WindowID.Value, rect, Draw, "Extended Graphics（画面设置扩展）");
 			else
 				Draw_Settings(false);
 		}
@@ -40,7 +40,7 @@ namespace CareBairPackage
 				{
 					scroll = GUILayout.BeginScrollView(scroll);
 					{
-						Field("No Fade Animations", true);
+						Field("无过度动画", true);
 						Draw_Settings();
 					}
 					GUILayout.EndScrollView();
@@ -56,10 +56,10 @@ namespace CareBairPackage
 		{
 			GUILayout.BeginHorizontal();
 			{
-				if (GUILayout.Button("Save"))
+				if (GUILayout.Button("保存"))
 					Save();
 
-				if (GUILayout.Button("Load"))
+				if (GUILayout.Button("加载"))
 					Load();
 			}
 			GUILayout.EndHorizontal();
@@ -88,11 +88,11 @@ namespace CareBairPackage
 			EnviroFogSettings fog = sky.fogSettings;
 			EnviroLightshafts light = sky.LightShafts;
 
-			fog.distanceFog = Field("Distance Fog", fog.distanceFog, draw);
-			fog.heightFog = Field("Height Fog", fog.heightFog, draw);
-			sky.volumeLighting = Field("Volume Lighting", sky.volumeLighting, draw);
-			light.sunLightShafts = Field("Sun Light Shafts", light.sunLightShafts, draw);
-			light.moonLightShafts = Field("Moon Light Shafts", light.moonLightShafts, draw);
+			fog.distanceFog = Field("雾气距离", fog.distanceFog, draw);
+			fog.heightFog = Field("雾气高度", fog.heightFog, draw);
+			sky.volumeLighting = Field("体积光", sky.volumeLighting, draw);
+			light.sunLightShafts = Field("太阳光轴", light.sunLightShafts, draw);
+			light.moonLightShafts = Field("月亮光轴", light.moonLightShafts, draw);
 		}
 
 		static void Draw_Settings_Bloom(GraphicSystem data, bool draw = true)
@@ -103,10 +103,10 @@ namespace CareBairPackage
 			for (int i = 0; i < _bloom.Count; i++)
 			{
 				Bloom obj = _bloom[i];
-				string name = $"[Bloom{i}] ";
+				string name = $"[泛光{i}] ";
 
-				obj.enabled.value = Field($"{name}Enabled", obj.enabled.value, draw);
-				obj.fastMode.value = Field($"{name}Fast Mode", obj.fastMode.value, draw);
+				obj.enabled.value = Field($"{name}启用", obj.enabled.value, draw);
+				obj.fastMode.value = Field($"{name}快速模式", obj.fastMode.value, draw);
 				obj.anamorphicRatio.value = Field($"{name}Anamorphic Ratio", obj.anamorphicRatio.value, draw);
 				obj.clamp.value = Field($"{name}Clamp", obj.clamp.value, draw);
 				obj.diffusion.value = Field($"{name}Diffusion", obj.diffusion.value, draw);
@@ -125,9 +125,9 @@ namespace CareBairPackage
 			for (int i = 0; i < _ao.Count; i++)
 			{
 				AmbientOcclusion obj = _ao[i];
-				string name = $"[Amb.Occ.{i}] ";
+				string name = $"[环境遮光罩.{i}] ";
 
-				obj.enabled.value = Field($"{name}Enabled", obj.enabled.value, draw);
+				obj.enabled.value = Field($"{name}启用", obj.enabled.value, draw);
 				obj.ambientOnly.value = Field($"{name}Ambient Only", obj.ambientOnly.value, draw);
 				obj.blurTolerance.value = Field($"{name}Blur Tolerance", obj.blurTolerance.value, draw);
 				obj.directLightingStrength.value = Field($"{name}Direct Lighting Strength", obj.directLightingStrength.value, draw);
@@ -136,8 +136,8 @@ namespace CareBairPackage
 				obj.radius.value = Field($"{name}Radius", obj.radius.value, draw);
 				obj.thicknessModifier.value = Field($"{name}Thickness Modifier", obj.thicknessModifier, draw);
 				obj.upsampleTolerance.value = Field($"{name}Upsample Tolerance", obj.upsampleTolerance, draw);
-				obj.mode.value = Field($"{name}Mode", obj.mode.value, draw);
-				obj.quality.value = Field($"{name}Quality", obj.quality.value, draw);
+				obj.mode.value = Field($"{name}模式", obj.mode.value, draw);
+				obj.quality.value = Field($"{name}质量", obj.quality.value, draw);
 			}
 		}
 
@@ -149,9 +149,9 @@ namespace CareBairPackage
 			for (int i = 0; i < _ssr.Count; i++)
 			{
 				ScreenSpaceReflections obj = _ssr[i];
-				string name = $"[SSR{i}] ";
+				string name = $"[反射效果{i}] ";
 
-				obj.enabled.value = Field($"{name}Enabled", obj.enabled.value, draw);
+				obj.enabled.value = Field($"{name}启用", obj.enabled.value, draw);
 				obj.distanceFade.value = Field($"{name}Distance Fade", obj.distanceFade.value, draw);
 				obj.maximumIterationCount.value = Field($"{name}Max Iteration Count", obj.maximumIterationCount, draw);
 				obj.maximumMarchDistance.value = Field($"{name}Max March Distance", obj.maximumMarchDistance.value, draw);
@@ -170,13 +170,13 @@ namespace CareBairPackage
 			for (int i = 0; i < _dof.Count; i++)
 			{
 				DepthOfField obj = _dof[i];
-				string name = $"[DoF{i}] ";
+				string name = $"[景深{i}] ";
 
-				obj.enabled.value = Field($"{name}Enabled", obj.enabled.value, draw);
-				obj.aperture.value = Field($"{name}Aperture", obj.aperture.value, draw);
-				obj.focalLength.value = Field($"{name}Focal Length", obj.focalLength.value, draw);
-				obj.focusDistance.value = Field($"{name}Focus Distance", obj.focusDistance.value, draw);
-				obj.kernelSize.value = Field($"{name}Kernel Size", obj.kernelSize.value, draw);
+				obj.enabled.value = Field($"{name}启用", obj.enabled.value, draw);
+				obj.aperture.value = Field($"{name}光圈", obj.aperture.value, draw);
+				obj.focalLength.value = Field($"{name}焦距", obj.focalLength.value, draw);
+				obj.focusDistance.value = Field($"{name}对焦距离", obj.focusDistance.value, draw);
+				obj.kernelSize.value = Field($"{name}焦点大小", obj.kernelSize.value, draw);
 			}
 		}
 

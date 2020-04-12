@@ -53,16 +53,16 @@ namespace CareBairPackage
 							HScene.AnimationListInfo next = list[UnityEngine.Random.Range(0, list.Count)];
 							HSceneFlagCtrl.Instance.selectAnimationListInfo = next;
 
-							MapUIContainer.AddNotify($"Next Animation: {next.nameAnimation}");
+							MapUIContainer.AddNotify(/*$"Next Animation*/$"下一个动画: {next.nameAnimation}");
 						}
 						else
-							MapUIContainer.AddNotify("No animations available for this category.");
+							MapUIContainer.AddNotify(/*"No animations available for this category."*/"这个类别没有可用的动画");
 					}
 					else
-						MapUIContainer.AddNotify("This category is not available during this scene.");
+						MapUIContainer.AddNotify(/*"This category is not available during this scene."*/"这个类别的动画在此场景中不可用");
 				}
 				else
-					MapUIContainer.AddNotify("Next animation is already being loaded.");
+					MapUIContainer.AddNotify(/*"Next animation is already being loaded."*/"下一个动画已加载");
 			}
 		}
 	}

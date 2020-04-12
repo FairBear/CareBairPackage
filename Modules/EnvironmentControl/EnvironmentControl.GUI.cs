@@ -60,7 +60,7 @@ namespace CareBairPackage
 				};
 			}
 
-			rect = Window.Draw(WindowID.Value, rect, Draw, "Environment Control");
+			rect = Window.Draw(WindowID.Value, rect, Draw, "环境控制");
 		}
 
 		static void Draw(int id)
@@ -89,9 +89,10 @@ namespace CareBairPackage
 			Weather[] list = (Weather[])Enum.GetValues(typeof(Weather));
 			int half = list.Length / 2;
 
-			GUILayout.Label("Weather", headerStyle);
+			GUILayout.Label("天气", headerStyle);
 
 			GUILayout.BeginHorizontal();
+			string[] weatherCN = new string[8] { "晴天", "阴天1", "阴天2", "阴天3", "阴天4", "雾天", "雨天", "暴风雨" };
 			for (int i = 0; i < list.Length; i++)
 			{
 				Weather weather = list[i];
@@ -103,7 +104,7 @@ namespace CareBairPackage
 				}
 
 				if (GUILayout.Button(
-						$"{weather.ToString()}",
+						$"{weatherCN[i]}",
 						currWeather == weather ?
 							selectedButtonStyle :
 							GUI.skin.button,
@@ -119,7 +120,7 @@ namespace CareBairPackage
 
 		static void Draw_Temperature(EnvironmentSimulator sim)
 		{
-			GUILayout.Label("Temperature", headerStyle);
+			GUILayout.Label("气温", headerStyle);
 
 			if (shouldUpdate)
 				temp_temperature = ((int)sim.TemperatureValue).ToString();
@@ -128,7 +129,7 @@ namespace CareBairPackage
 			{
 				bool flag = int.TryParse(temp_temperature = GUILayout.TextField(temp_temperature), out int val);
 
-				if (GUILayout.Button("Update", GUILayout.Width(80f)) && flag)
+				if (GUILayout.Button("更新", GUILayout.Width(80f)) && flag)
 				{
 					sim.TemperatureValue = val;
 					temp_temperature = ((int)sim.TemperatureValue).ToString();
@@ -162,23 +163,23 @@ namespace CareBairPackage
 				temp_second = time.Seconds.ToString();
 			}
 
-			GUILayout.Label("Date & Time", headerStyle);
+			GUILayout.Label("日期 和 时间", headerStyle);
 
 			GUILayout.BeginHorizontal();
 			{
-				temp_year = Draw_Time_Field("Year", temp_year, out year, out flag0);
-				temp_day = Draw_Time_Field("Day", temp_day, out day, out flag1);
+				temp_year = Draw_Time_Field("年", temp_year, out year, out flag0);
+				temp_day = Draw_Time_Field("天", temp_day, out day, out flag1);
 			}
 			GUILayout.EndHorizontal();
 			GUILayout.BeginHorizontal();
 			{
-				temp_hour = Draw_Time_Field("Hour", temp_hour, out hour, out flag2);
-				temp_minute = Draw_Time_Field("Minute", temp_minute, out minute, out flag3);
-				temp_second = Draw_Time_Field("Second", temp_second, out second, out flag4);
+				temp_hour = Draw_Time_Field("小时", temp_hour, out hour, out flag2);
+				temp_minute = Draw_Time_Field("分钟", temp_minute, out minute, out flag3);
+				temp_second = Draw_Time_Field("秒", temp_second, out second, out flag4);
 			}
 			GUILayout.EndHorizontal();
 
-			if (GUILayout.Button("Update Date & Time") && flag0 && flag1 && flag2 && flag3 && flag4)
+			if (GUILayout.Button("更新 日期 和 时间") && flag0 && flag1 && flag2 && flag3 && flag4)
 			{
 				sim.EnviroSky.SetTime(year, day, hour, minute, second);
 
