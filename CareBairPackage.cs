@@ -11,10 +11,10 @@ namespace CareBairPackage
 	public partial class CareBairPackage : BaseUnityPlugin
 	{
 		const string GUID = "com.fairbair.carebairpackage";
-		const string Name = "Care Bair Package";
+		const string Name = "Care Bair Package（GenesisAN@ZOD汉化）";
 		const string Version = "1.4.3";
 
-		const string SECTION = "_General";
+		const string SECTION = "#General（Care Bair Package设置）";
 
 		const string DESCRIPTION_NOTIFY_CRASH =
 			"Send a message on the bottom-right side of the screen when a module crashes.";
@@ -64,7 +64,7 @@ namespace CareBairPackage
 
 			entry.SettingChanged += (sender, args) => setter();
 		}
-
+		
 		internal static void LogError(Type source, string text)
 		{
 			string prefix = $"[{Name}]";

@@ -9,7 +9,7 @@ namespace CareBairPackage
 {
 	public static partial class UIMacro
 	{
-		static readonly ADMSheet sheet = new ADMSheet("UI Macro", null, Condition);
+		static readonly ADMSheet sheet = new ADMSheet("UI快捷菜单", null, Condition);
 		static MenuUIBehaviour current;
 
 		public static void Update()
@@ -85,7 +85,7 @@ namespace CareBairPackage
 
 				if (device != null)
 				{
-					sheets.Add(new ADMSheet("Data Terminal", () =>
+					sheets.Add(new ADMSheet("数据终端", () =>
 					{
 						MapUIContainer.SystemMenuUI.IsActiveControl = false;
 
@@ -101,12 +101,12 @@ namespace CareBairPackage
 				}
 			}
 
-			sheets.Add(MakeSheet(controller, "Item Box", "ItemBox", MapUIContainer.ItemBoxUI));
-			sheets.Add(MakeSheet(controller, "Bathing Outfits", "DressRoom", MapUIContainer.DressRoomUI));
-			sheets.Add(MakeSheet(controller, "Closet Outfits", "ClothChange", MapUIContainer.ClosetUI));
-			sheets.Add(MakeSheet(controller, "Shan's Shop", null, MapUIContainer.ShopUI, true));
+			sheets.Add(MakeSheet(controller, /*"Item Box"*/"物品箱", "ItemBox", MapUIContainer.ItemBoxUI));
+			sheets.Add(MakeSheet(controller, /*"Bathing Outfits"*/"更衣处", "DressRoom", MapUIContainer.DressRoomUI));
+			sheets.Add(MakeSheet(controller, /*"Closet Outfits"*/ "服装棚", "ClothChange", MapUIContainer.ClosetUI));
+			sheets.Add(MakeSheet(controller, /*"Shan's Shop"*/"商店", null, MapUIContainer.ShopUI, true));
 
-			sheets.Add(new ADMSheet("Kitchen", () =>
+			sheets.Add(new ADMSheet(/*"Kitchen"*/"灶台", () =>
 			{
 				MapUIContainer.SystemMenuUI.IsActiveControl = false;
 
@@ -116,9 +116,9 @@ namespace CareBairPackage
 				controller.ChangeState("Kitchen");
 			}));
 
-			sheets.Add(MakeSheet(controller, "Pet Synthesis", "Craft", MapUIContainer.PetCraftUI, true));
-			sheets.Add(MakeSheet(controller, "Medicine Table", "Craft", MapUIContainer.MedicineCraftUI, true));
-			sheets.Add(MakeSheet(controller, "Jukebox", null, MapUIContainer.JukeBoxUI, true));
+			sheets.Add(MakeSheet(controller, /*"Pet Synthesis"*/"宠物合成", "Craft", MapUIContainer.PetCraftUI, true));
+			sheets.Add(MakeSheet(controller, /*"Medicine Table"*/"制药台", "Craft", MapUIContainer.MedicineCraftUI, true));
+			sheets.Add(MakeSheet(controller, /*"Jukebox"*/"更改BGM", null, MapUIContainer.JukeBoxUI, true));
 
 			sheet.SetSheets(sheets);
 		}

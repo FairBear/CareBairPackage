@@ -8,7 +8,7 @@ namespace CareBairPackage
 {
 	public static partial class FasterWarp
 	{
-		static readonly ADMSheet sheet = new ADMSheet("Warp To", null, Condition);
+		static readonly ADMSheet sheet = new ADMSheet(/*"Warp To"*/"传送到", null, Condition);
 
 		public static void Update()
 		{
